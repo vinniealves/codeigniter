@@ -67,10 +67,10 @@
                     <table id="dt_team" class="table table-struped table-bordered">
                         <thead>
                             <tr class="tableheader">
-                                <th>Nome</th>
-                                <th>Foto</th>
-                                <th>Descrição</th>
-                                <th>Ações</th>
+                                <th class="dt-center">Nome</th>
+                                <th class="dt-center no-sort">Foto</th>
+                                <th class="dt-center no-sort">Descrição</th>
+                                <th class="dt-center no-sort">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -88,10 +88,10 @@
                     <table id="dt_users" class="table table-struped table-bordered">
                         <thead>
                             <tr class="tableheader">
-                                <th>Login</th>
-                                <th>Nome</th>
-                                <th>E-mail</th>
-                                <th>Ações</th>
+                                <th class="dt-center">Login</th>
+                                <th class="dt-center">Nome</th>
+                                <th class="dt-center">E-mail</th>
+                                <th class="dt-center no-sort">Ações</th>
                             </tr>
                         </thead>
                         <tbody>

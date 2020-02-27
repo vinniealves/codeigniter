@@ -300,7 +300,54 @@ class Restrict extends CI_Controller {
 		
 		echo json_encode($json);
 	}
+
+	public function ajax_get_course_data() {
+
+		if(!$this->input->is_ajax_request()) {
+			exit('Nenhum acesso de script direto permitido');
+		}
+		
+		$json = array();
+		$json['status'] = 1;
+		$json['input'] = array();
+		
+		$course_id = $this->input->post('course_id');
+		
+		$dados = $this->courses_model->get_data($course_id)->result_array()[0];
+		
+		$json['input']['course_id'] = $dados['course_id'];
+		$json['input']['course_name'] = $dados['course_name'];
+		$json['input']['course_duration'] = $dados['course_duration'];
+		$json['input']['course_description'] = $dados['course_description'];
+		
+		$json['img']['course_img_path'] = base_url($dados['course_img']);
+		
+		echo json_encode($json);
+	}
 	
+	public function ajax_get_member_data() {
+
+		if(!$this->input->is_ajax_request()) {
+			exit('Nenhum acesso de script direto permitido');
+		}
+		
+		$json = array();
+		$json['status'] = 1;
+		$json['input'] = array();
+		
+		$member_id = $this->input->post('member_id');
+		
+		$dados = $this->team_model->get_data($member_id)->result_array()[0];
+		
+		$json['input']['member_id'] = $dados['member_id'];
+		$json['input']['member_name'] = $dados['member_name'];
+		$json['input']['member_description'] = $dados['member_description'];
+		
+		$json['img']['member_photo_path'] = base_url($dados['member_photo']);
+		
+		echo json_encode($json);
+	}
+
 	public function ajax_list_course(){
 		if(!$this->input->is_ajax_request()) {
 			exit('Nenhum acesso de script direto permitido');
@@ -342,6 +389,131 @@ class Restrict extends CI_Controller {
 			'data' => $data
 		);
 
+		echo json_encode($json);
+	}
+
+	public function ajax_list_member(){
+		if(!$this->input->is_ajax_request()) {
+			exit('Nenhum acesso de script direto permitido');
+		}
+
+		$team = $this->team_model->get_datatable();
+
+		$data = array();
+		foreach ($team as $member) {
+			$row = array();
+			$row[] = $member->member_name;
+
+			if($member->member_photo){
+				$row[] = '<img src="'.base_url($member->member_photo).'" style="max-width:100px;max-height:100px"/>';
+			} else {
+				$row[] = '';
+			}
+
+			$row[] = '<div class="description">'.$member->member_description.'</div>';
+
+			$row[] = 
+				'<div style="display:inline-block">
+					<button class="btn btn-primary btn-edit-member" member_id="'.$member->member_id.'">
+						<i class="fa fa-edit"></i>
+					</button>
+					<button class="btn btn-danger btn-del-member" member_id="'.$member->member_id.'">
+						<i class="fa fa-times"></i>
+					</button>
+				</div>';
+
+			$data[] = $row;
+		}
+
+		$json = array(
+			'draw' => $this->input->post('draw'),
+			'recordsTotal' => $this->team_model->records_total(),
+			'recordsFiltered' => $this->team_model->records_filtered(),
+			'data' => $data
+		);
+
+		echo json_encode($json);
+	}
+
+	public function ajax_list_user(){
+		if(!$this->input->is_ajax_request()) {
+			exit('Nenhum acesso de script direto permitido');
+		}
+
+		$users = $this->users_model->get_datatable();
+
+		$data = array();
+		foreach ($users as $user) {
+			$row = array();
+			$row[] = $user->user_login;
+			$row[] = $user->user_full_name;
+			$row[] = $user->user_email;
+
+			$row[] = 
+				'<div style="display:inline-block">
+					<button class="btn btn-primary btn-edit-user" user_id="'.$user->user_id.'">
+						<i class="fa fa-edit"></i>
+					</button>
+					<button class="btn btn-danger btn-del-user" user_id="'.$user->user_id.'">
+						<i class="fa fa-times"></i>
+					</button>
+				</div>';
+
+			$data[] = $row;
+		}
+
+		$json = array(
+			'draw' => $this->input->post('draw'),
+			'recordsTotal' => $this->users_model->records_total(),
+			'recordsFiltered' => $this->users_model->records_filtered(),
+			'data' => $data
+		);
+
+		echo json_encode($json);
+	}
+
+	public function ajax_delete_course_data() {
+
+		if(!$this->input->is_ajax_request()) {
+			exit('Nenhum acesso de script direto permitido');
+		}
+		
+		$json = array();
+		$json['status'] = 1;
+		
+		$course_id = $this->input->post('course_id');
+		$this->courses_model->delete($course_id);
+		
+		echo json_encode($json);
+	}
+
+	public function ajax_delete_member_data() {
+
+		if(!$this->input->is_ajax_request()) {
+			exit('Nenhum acesso de script direto permitido');
+		}
+		
+		$json = array();
+		$json['status'] = 1;
+		
+		$member_id = $this->input->post('member_id');		
+		$this->team_model->delete($member_id)->result_array()[0];
+		
+		echo json_encode($json);
+	}
+
+	public function ajax_delete_user_data() {
+
+		if(!$this->input->is_ajax_request()) {
+			exit('Nenhum acesso de script direto permitido');
+		}
+		
+		$json = array();
+		$json['status'] = 1;
+		
+		$user_id = $this->input->post('user_id');		
+		$this->users_model->delete($user_id)->result_array()[0];
+		
 		echo json_encode($json);
 	}
 

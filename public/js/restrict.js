@@ -116,6 +116,90 @@ $(function(){
         return false;
     });
 
+    function active_btn_course(){
+        $('.btn-edit-course').click(function(){
+            $.ajax({
+                type: 'POST',
+                url: BASE_URL + 'restrict/ajax_get_course_data',
+                dataType: 'json',
+                data: {'course_id': $(this).attr('course_id')},
+                success:function(response) {
+                    clearErrors();
+                    $('#form_course')[0].reset();
+                    $.each(response["input"], function(id, value){
+                        $('#'+id).val(value);
+                    });
+                    $('#course_img_path').attr('src', response['img']['course_img_path']);
+                    $("#modal_course").modal();
+                }
+            });
+        });
+
+        $('.btn-del-course').click(function(){
+            course_id = $(this);
+            Swal.fire({
+                title: 'Atenção!',
+                text: 'Deseja deletar esse curso?',
+                showCancelButton: true,
+                confirmButtonColor: '#d9534f',
+                confirmButtonText: 'Sim',
+                cancelButtonText: 'Não'
+            }).then((result) => {
+                if(result.value) {
+                    $.ajax({
+                        type: 'POST',
+                        url: BASE_URL + 'restrict/ajax_delete_course_data',
+                        dataType: 'json',
+                        data: {'course_id': course_id.attr('course_id')},
+                        success:function(response) {
+                            Swal.fire('Sucesso!', 'Ação executada com sucesso', 'success');
+                            dt_course.ajax.reload();
+                        }
+                    });
+                }
+            })
+        });
+    }
+
+    function active_btn_member(){
+        $('.btn-edit-member').click(function(){
+            $.ajax({
+                type: 'POST',
+                url: BASE_URL + 'restrict/ajax_get_member_data',
+                dataType: 'json',
+                data: {'member_id': $(this).attr('member_id')},
+                success:function(response) {
+                    clearErrors();
+                    $('#form_member')[0].reset();
+                    $.each(response["input"], function(id, value){
+                        $('#'+id).val(value);
+                    });
+                    $('#member_photo_path').attr('src', response['img']['member_photo_path']);
+                    $("#modal_member").modal();
+                }
+            });
+        });
+    }
+
+    function active_btn_user(){
+        $('.btn-edit-user').click(function(){
+            $.ajax({
+                type: 'POST',
+                url: BASE_URL + 'restrict/ajax_get_user_data',
+                dataType: 'json',
+                data: {'user_id': $(this).attr('user_id')},
+                success:function(response) {
+                    clearErrors();
+                    $('#form_user')[0].reset();
+                    $.each(response["input"], function(id, value){
+                        $('#'+id).val(value);
+                    });
+                    $("#modal_user").modal();
+                }
+            });
+        });
+    }
+
     var dt_course = $('#dt_courses').DataTable({
         'autoWidth':false,
         'processing':true,
@@ -127,7 +211,44 @@ $(function(){
         'columnDefs':[
             {targets: 'no-sort', orderable: false},
             {targets: 'dt-center', className: 'dt-center'}
-        ]
+        ],
+        'initComplete': function() {
+            active_btn_course();
+        }
+    });
+
+    var dt_member = $('#dt_team').DataTable({
+        'autoWidth':false,
+        'processing':true,
+        'serverSide':true,
+        'ajax': {
+            'url':BASE_URL+'restrict/ajax_list_member',
+            'type': 'POST'
+        },
+        'columnDefs':[
+            {targets: 'no-sort', orderable: false},
+            {targets: 'dt-center', className: 'dt-center'}
+        ],
+        'initComplete': function() {
+            active_btn_member();
+        }
+    });
+
+    var dt_user = $('#dt_users').DataTable({
+        'autoWidth':false,
+        'processing':true,
+        'serverSide':true,
+        'ajax': {
+            'url':BASE_URL+'restrict/ajax_list_user',
+            'type': 'POST'
+        },
+        'columnDefs':[
+            {targets: 'no-sort', orderable: false},
+            {targets: 'dt-center', className: 'dt-center'}
+        ],
+        'initComplete': function() {
+            active_btn_user();
+        }
     });
 
 
