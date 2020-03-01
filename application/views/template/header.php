@@ -8,34 +8,30 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		<link rel="icon" href="favicon.ico">
-		<title>Lattes - Onepage Multipurpose Bootstrap HTML</title>
+		<title>Alfahelix Treinamentos</title>
 		<!-- Bootstrap core CSS -->
-		<link href="<?= base_url('public/css/bootstrap.min.css') ?>" rel="stylesheet">
+		<link href="<?php echo base_url(); ?>public/css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 		<!-- Custom styles for this template -->
-		<link href="<?= base_url('public/css/owl.carousel.css') ?>" rel="stylesheet">
-		<link href="<?= base_url('public/css/owl.theme.default.min.css') ?>"  rel="stylesheet">
-		<link href="<?= base_url('public/css/style.css') ?>" rel="stylesheet">
+		<link href="<?php echo base_url(); ?>public/css/owl.carousel.css" rel="stylesheet">
+		<link href="<?php echo base_url(); ?>public/css/owl.theme.default.min.css"  rel="stylesheet">
+		<link href="<?php echo base_url(); ?>public/css/style.css" rel="stylesheet">
 		<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 		<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-		<script src="<?= base_url('public/js/ie-emulation-modes-warning.js') ?>"></script>
+		<script src="<?php echo base_url(); ?>public/js/ie-emulation-modes-warning.js"></script>
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 
-		<?php 
-			if(isset($styles)) :
-				foreach($styles as $style): 
-					$href = base_url().'public/css/'.$style;
-		?>
-					<link rel="stylesheet" href="<?= $href ?>">
-		<?php
-				endforeach;	
-			endif;
-		?>
-
+		<?php if (isset($styles)) {
+			foreach ($styles as $style_name) {
+				$href = base_url() . "public/css/" . $style_name; ?>
+				<link href="<?=$href?>" rel="stylesheet">
+			<?php }
+		} ?>
+		
 	</head>
 	<body id="page-top">
 		<!-- Navigation -->
@@ -49,7 +45,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand page-scroll" href="#page-top"><img src="<?= base_url('public/images/logo.png') ?>" alt="Lattes theme logo"></a>
+					<a class="navbar-brand page-scroll" href="#page-top"><img src="<?php echo base_url(); ?>public/images/logo.svg" alt="Lattes theme logo"></a>
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -58,22 +54,19 @@
 							<a href="#page-top"></a>
 						</li>
 						<li>
-							<a class="page-scroll" href="<?= base_url() ?>#about">About</a>
+							<a class="page-scroll" href="<?php echo base_url(); ?>#about">Sobre</a>
 						</li>
 						<li>
-							<a class="page-scroll" href="<?= base_url() ?>#services">Services</a>
+							<a class="page-scroll" href="<?php echo base_url(); ?>#course">Cursos</a>
 						</li>
 						<li>
-							<a class="page-scroll" href="<?= base_url() ?>#portfolio">Portfolio</a>
+							<a class="page-scroll" href="<?php echo base_url(); ?>#team">Equipe</a>
 						</li>
 						<li>
-							<a class="page-scroll" href="<?= base_url() ?>#team">Team</a>
+							<a class="page-scroll" href="<?php echo base_url(); ?>#contact">Contato</a>
 						</li>
 						<li>
-							<a class="page-scroll" href="<?= base_url() ?>#contact">Contact</a>
-						</li>
-						<li>
-							<a class="page-scroll" href="<?= base_url('restrict') ?>">Login</a>
+							<a class="page-scroll" href="<?php echo base_url(); ?>restrict">Login</a>
 						</li>
 					</ul>
 				</div>
@@ -81,4 +74,3 @@
 			</div>
 			<!-- /.container-fluid -->
 		</nav>
-		<!-- Header -->
