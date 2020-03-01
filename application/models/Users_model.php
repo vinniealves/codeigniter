@@ -55,8 +55,8 @@ class Users_model extends CI_Model {
 		return $this->db->get()->num_rows() > 0;
 	}
 
-	var $column_search = array("user_login", "user_full_name", "user_email");
-	var $column_order = array("user_login", "user_full_name", "user_email");
+	public $column_search = array("user_login", "user_full_name", "user_email");
+	public $column_order = array("user_login", "user_full_name", "user_email");
 
 	private function _get_datatable() {
 

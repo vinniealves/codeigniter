@@ -44,8 +44,8 @@ class Team_model extends CI_Model {
 		return $this->db->get()->num_rows() > 0;
 	}
 
-	var $column_search = array("member_name", "member_description");
-	var $column_order = array("member_name");
+	public $column_search = array("member_name", "member_description");
+	public $column_order = array("member_name");
 
 	private function _get_datatable() {
 

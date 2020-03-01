@@ -44,8 +44,8 @@ class Courses_model extends CI_Model {
 		return $this->db->get()->num_rows() > 0;
 	}
 
-	var $column_search = array("course_name", "course_description");
-	var $column_order = array("course_name", "", "course_duration");
+	public $column_search = array("course_name", "course_description");
+	public $column_order = array("course_name", "", "course_duration");
 
 	private function _get_datatable() {
 

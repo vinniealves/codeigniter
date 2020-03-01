@@ -7,6 +7,9 @@ class Restrict extends CI_Controller{
 	public function __construct() {
 		parent::__construct();
 		$this->load->library("session");
+		$this->load->model('courses_model');
+		$this->load->model('team_model');
+		$this->load->model('users_model');
 	}
 
 	public function index(){
@@ -61,7 +64,6 @@ class Restrict extends CI_Controller{
 			$json["status"] = 0;
 			$json["error_list"]["#username"] = "Usuário não pode ser vazio!";
 		} else {
-			$this->load->model("users_model");
 			$result = $this->users_model->get_user_data($username);
 			if ($result) {
 				$user_id = $result->user_id;
@@ -125,8 +127,6 @@ class Restrict extends CI_Controller{
 		$json["status"] = 1;
 		$json["error_list"] = array();
 
-		$this->load->model("courses_model");
-
 		$data = $this->input->post();
 
 		if (empty($data["course_name"])) {
@@ -185,8 +185,6 @@ class Restrict extends CI_Controller{
 		$json["status"] = 1;
 		$json["error_list"] = array();
 
-		$this->load->model("team_model");
-
 		$data = $this->input->post();
 
 		if (empty($data["member_name"])) {
@@ -231,8 +229,6 @@ class Restrict extends CI_Controller{
 		$json = array();
 		$json["status"] = 1;
 		$json["error_list"] = array();
-
-		$this->load->model("users_model");
 
 		$data = $this->input->post();
 
@@ -302,8 +298,6 @@ class Restrict extends CI_Controller{
 		$json["status"] = 1;
 		$json["input"] = array();
 
-		$this->load->model("courses_model");
-
 		$course_id = $this->input->post("course_id");
 		$data = $this->courses_model->get_data($course_id)->result_array()[0];
 		$json["input"]["course_id"] = $data["course_id"];
@@ -326,8 +320,6 @@ class Restrict extends CI_Controller{
 		$json["status"] = 1;
 		$json["input"] = array();
 
-		$this->load->model("team_model");
-
 		$member_id = $this->input->post("member_id");
 		$data = $this->team_model->get_data($member_id)->result_array()[0];
 		$json["input"]["member_id"] = $data["member_id"];
@@ -348,8 +340,6 @@ class Restrict extends CI_Controller{
 		$json = array();
 		$json["status"] = 1;
 		$json["input"] = array();
-
-		$this->load->model("users_model");
 
 		$user_id = $this->input->post("user_id");
 		$data = $this->users_model->get_data($user_id)->result_array()[0];
@@ -373,7 +363,6 @@ class Restrict extends CI_Controller{
 		$json = array();
 		$json["status"] = 1;
 
-		$this->load->model("courses_model");
 		$course_id = $this->input->post("course_id");
 		$this->courses_model->delete($course_id);
 
@@ -389,7 +378,6 @@ class Restrict extends CI_Controller{
 		$json = array();
 		$json["status"] = 1;
 
-		$this->load->model("team_model");
 		$member_id = $this->input->post("member_id");
 		$this->team_model->delete($member_id);
 
@@ -405,7 +393,6 @@ class Restrict extends CI_Controller{
 		$json = array();
 		$json["status"] = 1;
 
-		$this->load->model("users_model");
 		$user_id = $this->input->post("user_id");
 		$this->users_model->delete($user_id);
 
@@ -418,7 +405,6 @@ class Restrict extends CI_Controller{
 			exit("Nenhum acesso de script direto permitido!");
 		}
 
-		$this->load->model("courses_model");
 		$courses = $this->courses_model->get_datatable();
 
 		$data = array();
@@ -467,7 +453,6 @@ class Restrict extends CI_Controller{
 			exit("Nenhum acesso de script direto permitido!");
 		}
 
-		$this->load->model("team_model");
 		$team = $this->team_model->get_datatable();
 
 		$data = array();
@@ -515,7 +500,6 @@ class Restrict extends CI_Controller{
 			exit("Nenhum acesso de script direto permitido!");
 		}
 
-		$this->load->model("users_model");
 		$users = $this->users_model->get_datatable();
 
 		$data = array();
